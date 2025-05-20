@@ -32,7 +32,7 @@ const dbUrl=process.env.ATLASDB_URL;
 const store = MongoStore.create({
   mongoUrl: dbUrl, // MongoDB connection URL 
   crypto: {
-    secret: "mysupersecretcode", // Secret for encrypting session data
+    secret: process.env.SECRET , // Secret for encrypting session data
   },
   touchAfter: 24 * 60 * 60, // Time in seconds to wait before updating session data
 });
@@ -42,7 +42,7 @@ store.on("error", function (e) {
 
 const sessionOptions = { 
   store,
-  secret:"mysupersecretcode",
+  secret: process.env.SECRET, // Secret for signing the session ID cookie
   resave: false,
   saveUninitialized:true,
   cookie: { 
