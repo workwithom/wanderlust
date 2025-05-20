@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid navbar-container">
+      <div class="navbar-top">
+        <div class="d-flex align-items-center">
+          <a class="navbar-brand" href="/listings"><i class="fa-brands fa-airbnb"></i></a>
+          <a class="navbar-brand" href="/listings">WANDERLUST</a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/listings/new">Airbnb your home</a>
+            <% if(!currentUser) { %>
+              <a class="nav-link" href="/signup"><b>Sign up</b></a>
+              <a class="nav-link" href="/login"><b>Log in</b></a>
+            <% } else { %>
+              <a class="nav-link" href="/logout"><b>Log out</b></a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-bottom">
+        <!-- Search Toggle Button -->
+      <button class="search-toggle-btn me-2" type="button" onclick="toggleMobileSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+
+      <!-- Desktop Search Bar -->
+      <div class="navbar-searchbar">
+        <form class="search-input-group" action="/listings" method="GET">
+          <div class="search-input-section">
+            <label class="search-label">Where</label>
+            <input class="search-input" type="text" name="location" placeholder="Search destinations">
+          </div>
+          <div class="search-divider"></div>
+          <div class="search-input-section">
+            <label class="search-label">Check in</label>
+            <input class="search-input" type="date" name="checkin">
+          </div>
+          <div class="search-divider"></div>
+          <div class="search-input-section">
+            <label class="search-label">Check out</label>
+            <input class="search-input" type="date" name="checkout">
+          </div>
+          <div class="search-divider"></div>
+          <div class="search-input-section">
+            <label class="search-label">Who</label>
+            <input class="search-input" type="number" name="guests" placeholder="Add guests" min="1">
+          </div>
+          <button class="search-button" type="submit">
+            <i class="fa-solid fa-search search-icon"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Search Overlay -->
+  <div class="mobile-search-overlay">
+    <form class="search-input-group" action="/listings" method="GET">
+      <div class="search-input-section">
+        <label class="search-label">Where</label>
+        <input class="search-input" type="text" name="location" placeholder="Search destinations">
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-input-section">
+        <label class="search-label">Check in</label>
+        <input class="search-input" type="date" name="checkin">
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-input-section">
+        <label class="search-label">Check out</label>
+        <input class="search-input" type="date" name="checkout">
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-input-section">
+        <label class="search-label">Who</label>
+        <input class="search-input" type="number" name="guests" placeholder="Add guests" min="1">
+      </div>
+      <button class="search-button" type="submit">
+        <i class="fa-solid fa-search search-icon"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Add JavaScript for mobile search toggle -->
+  <script>
+    function toggleMobileSearch() {
+      const overlay = document.querySelector('.mobile-search-overlay');
+      overlay.classList.toggle('active');
+      
+      // Focus on search input when overlay opens
+      if (overlay.classList.contains('active')) {
+        overlay.querySelector('input[name="location"]').focus();
+      }
+    }
+
+    // Close mobile search when clicking outside
+    document.addEventListener('click', (event) => {
+      const overlay = document.querySelector('.mobile-search-overlay');
+      const searchButton = document.querySelector('.search-toggle-btn');
+      
+      if (!overlay.contains(event.target) && !searchButton.contains(event.target)) {
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 995) {
+        document.querySelector('.mobile-search-overlay').classList.remove('active');
+      }
+    });
+  </script>

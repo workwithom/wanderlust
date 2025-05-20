@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit your listing</title>
+</head>
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-8 offset-2">
+    <h3>Edit Your Listing</h3>    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" 
+        novalidate 
+        class="needs-validation"
+        enctype="multipart/form-data">
+        
+        <div class="mb-3">
+            <label for="title" 
+            class="form-label">Title</label>
+            <input name="listing[title]" 
+            value="<%=listing.title%>" 
+            type="text" 
+            class="form-control"
+            required
+            >
+            <div class="valid-feedback"> title looks good!</div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="listing[description]" class="form-control" required><%= listing.description.trim() %></textarea>
+            <div class="invalid-feedback">Please enter a short description.</div>
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>            <select name="listing[category]" class="form-select category-select" required>
+                <option value="">Select a category</option>
+                <option value="rooms" <%= listing.category === 'rooms' ? 'selected' : '' %>>Rooms</option>
+                <option value="beach" <%= listing.category === 'beach' ? 'selected' : '' %>>Beach</option>
+                <option value="mountain" <%= listing.category === 'mountain' ? 'selected' : '' %>>Mountain</option>
+                <option value="village" <%= listing.category === 'village' ? 'selected' : '' %>>Village</option>
+                <option value="city" <%= listing.category === 'city' ? 'selected' : '' %>>City</option>
+                <option value="camping" <%= listing.category === 'camping' ? 'selected' : '' %>>Camping</option>
+                <option value="arctic" <%= listing.category === 'arctic' ? 'selected' : '' %>>Arctic</option>
+                <option value="desert" <%= listing.category === 'desert' ? 'selected' : '' %>>Desert</option>
+                <option value="countryside" <%= listing.category === 'countryside' ? 'selected' : '' %>>Countryside</option>
+                <option value="lakefront" <%= listing.category === 'lakefront' ? 'selected' : '' %>>Lakefront</option>
+                <option value="amazing-pools" <%= listing.category === 'amazing-pools' ? 'selected' : '' %>>Amazing Pools</option>
+                <option value="camper-vans" <%= listing.category === 'camper-vans' ? 'selected' : '' %>>Camper Vans</option>
+                <option value="castles" <%= listing.category === 'castles' ? 'selected' : '' %>>Castles</option>
+                <option value="containers" <%= listing.category === 'containers' ? 'selected' : '' %>>Containers</option>
+                <option value="design" <%= listing.category === 'design' ? 'selected' : '' %>>Design</option>                <option value="earth-homes" <%= listing.category === 'earth-homes' ? 'selected' : '' %>>Earth homes</option>
+                <option value="farms" <%= listing.category === 'farms' ? 'selected' : '' %>>Farms</option>
+                <option value="national-parks" <%= listing.category === 'national-parks' ? 'selected' : '' %>>National Parks</option>
+                <option value="vineyards" <%= listing.category === 'vineyards' ? 'selected' : '' %>>Vineyards</option>
+                <option value="omg" <%= listing.category === 'omg' ? 'selected' : '' %>>OMG!</option>
+                <option value="tiny-homes" <%= listing.category === 'tiny-homes' ? 'selected' : '' %>>Tiny Homes</option>
+                <option value="towers" <%= listing.category === 'towers' ? 'selected' : '' %>>Towers</option>
+                <option value="windmills" <%= listing.category === 'windmills' ? 'selected' : '' %>>Windmills</option>
+                <option value="luxe" <%= listing.category === 'luxe' ? 'selected' : '' %>>Luxe</option>
+            </select>
+            <div class="invalid-feedback">Please select a category.</div>
+        </div>
+        <div class="mb-3"> 
+            <label for="image" class="form-label">Current Image</label><br>
+            <% if(originalImageUrl) { %>
+              <img src="<%= originalImageUrl %>" class="img-thumbnail" alt="Listing Image" style="width: 200px;">
+            <% } %>
+         </div>   
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image</label>
+            <input name="image" 
+                   type="file" 
+                   class="form-control"
+                   accept="image/*">
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="price" 
+            class="form-label">price</label>
+            <input name="listing[price]"
+             value="<%= listing.price %>" 
+             type="text" 
+             class="form-control" required>
+             <div class="invalid-feedback">price should be valid.</div>
+        </div>
+        <div class="mb-3 col-md-8">
+            <label for="country" 
+            class="form-label">Country</label>
+            <input name="listing[country]"
+             value="<%= listing.country %>" 
+             type="text" 
+             class="form-control" required>
+             <div class="invalid-feedback">country should be valid.</div>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="location"
+             class="form-label">Location</label>
+            <input name="listing[location]" 
+            value="<%= listing.location %>" 
+            type="text" 
+            class="form-control" required>
+            <div class="invalid-feedback">location should be valid.</div>
+        </div>
+        <button class="btn edit-btn">EDIT</button>    
+        </form>
+    </div>
+    </div>
+

@@ -1,0 +1,85 @@
+/* Category Styles */
+.category-container {
+    padding-top: 10px;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.category-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 24px;
+    padding: 4px 16px;
+    margin: 0 -16px;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 0px;
+    min-width: 80px;
+    text-decoration: none;
+    color: #818181;
+    border: none;
+    background: none;
+    position: relative;
+    transition: color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.category-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #fc8282;
+    transition: width 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.category-item.active {
+    color: #222222;
+}
+
+.category-item.active::after {
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Tax Switch Styles */
+.tax-switch-container {
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+}
+
+.form-check-input {
+    cursor: pointer;
+    width: 3rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.form-check-input:checked {
+    background-color: #fe424d;
+    border-color: #fe424d;
+}
+
+.tax-included {
+    font-size: 0.8rem;
+    color: #fe424d;
+    margin-left: 0.3rem;
+}

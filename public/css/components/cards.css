@@ -1,0 +1,68 @@
+/* Card Styles */
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 0.5rem !important;
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    margin-top: 1;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.listing-links {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.listing-links:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.card-img-overlay {
+    opacity: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: aliceblue;
+}
+
+.card-img-overlay:hover {
+    opacity: 1;
+}
+
+.price-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2a2a2a;
+}
+
+/* Responsive card sizing */
+@media (max-width: 575.98px) {
+    .listing-card {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .card-img-top {
+        height: 225px !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .listing-card {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+}

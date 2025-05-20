@@ -1,0 +1,194 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <% if (searchParams && (searchParams.location || searchParams.checkin || searchParams.checkout || searchParams.guests)) { %>
+    <div class="search-summary bg-light p-3 mb-4 rounded">
+        <h5 class="mb-3">Search Results:</h5>
+        <div class="d-flex flex-wrap gap-3">
+            <% if (searchParams.location) { %>
+                <span class="badge bg-primary"><i class="fas fa-map-marker-alt me-1"></i> <%= searchParams.location %></span>
+            <% } %>
+            <% if (searchParams.checkin && searchParams.checkout) { %>
+                <span class="badge bg-info">
+                    <i class="fas fa-calendar me-1"></i> 
+                    <%= new Date(searchParams.checkin).toLocaleDateString() %> - 
+                    <%= new Date(searchParams.checkout).toLocaleDateString() %>
+                </span>
+            <% } %>
+            <% if (searchParams.guests) { %>
+                <span class="badge bg-secondary"><i class="fas fa-users me-1"></i> <%= searchParams.guests %> guests</span>
+            <% } %>
+            <a href="/listings" class="btn btn-sm btn-outline-secondary">Clear filters</a>
+        </div>
+    </div>
+    <% } %>
+
+    <div class="category-container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="category-scroll">            <a href="/listings<%= searchParams ? `?${new URLSearchParams({...searchParams, category: ''}).toString()}` : '' %>" 
+               class="category-item <%= !category ? 'active' : '' %>">
+                <i class="fa-solid fa-table-cells-large category-icon"></i>
+                <span class="category-label">All</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'rooms'}).toString() %>" 
+               class="category-item <%= category === 'rooms' ? 'active' : '' %>">
+                <i class="fa-solid fa-bed category-icon"></i>
+                <span class="category-label">Rooms</span>
+            </a>            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'beach'}).toString() %>" 
+               class="category-item <%= category === 'beach' ? 'active' : '' %>">
+                <i class="fa-solid fa-umbrella-beach category-icon"></i>
+                <span class="category-label">Beach</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'amazing-pools'}).toString() %>" 
+               class="category-item <%= category === 'amazing-pools' ? 'active' : '' %>">
+                <i class="fa-solid fa-swimming-pool category-icon"></i>
+                <span class="category-label">Amazing Pools</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'arctic'}).toString() %>" 
+               class="category-item <%= category === 'arctic' ? 'active' : '' %>">
+                <i class="fa-solid fa-snowflake category-icon"></i>
+                <span class="category-label">Arctic</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'camping'}).toString() %>" 
+               class="category-item <%= category === 'camping' ? 'active' : '' %>">
+                <i class="fa-solid fa-campground category-icon"></i>
+                <span class="category-label">Camping</span>
+            </a>            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'camper-vans'}).toString() %>" 
+               class="category-item <%= category === 'camper-vans' ? 'active' : '' %>">
+                <i class="fa-solid fa-caravan category-icon"></i>
+                <span class="category-label">Camper vans</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'castles'}).toString() %>" 
+               class="category-item <%= category === 'castles' ? 'active' : '' %>">
+                <i class="fa-solid fa-chess-rook category-icon"></i>
+                <span class="category-label">Castles</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'containers'}).toString() %>" 
+               class="category-item <%= category === 'containers' ? 'active' : '' %>">
+                <i class="fa-solid fa-cube category-icon"></i>
+                <span class="category-label">Containers</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'countryside'}).toString() %>" 
+               class="category-item <%= category === 'countryside' ? 'active' : '' %>">
+                <i class="fa-solid fa-tree category-icon"></i>
+                <span class="category-label">Countryside</span>
+            </a>
+            <a href="/listings?<%= new URLSearchParams({...searchParams || {}, category: 'design'}).toString() %>" 
+               class="category-item <%= category === 'design' ? 'active' : '' %>">
+                <i class="fa-solid fa-pencil-ruler category-icon"></i>
+                <span class="category-label">Design</span>
+            </a>
+            <a href="/listings?category=earth-homes" class="category-item <%= category === 'earth-homes' ? 'active' : '' %>">
+                <i class="fa-solid fa-globe-americas category-icon"></i>
+                <span class="category-label">Earth homes</span>
+            </a>
+            <a href="/listings?category=farms" class="category-item <%= category === 'farms' ? 'active' : '' %>">
+                <i class="fa-solid fa-tractor category-icon"></i>
+                <span class="category-label">Farms</span>
+            </a>
+            <a href="/listings?category=national-parks" class="category-item <%= category === 'national-parks' ? 'active' : '' %>">
+                <i class="fa-solid fa-mountain-sun category-icon"></i>
+                <span class="category-label">National parks</span>
+            </a>
+            <a href="/listings?category=vineyards" class="category-item <%= category === 'vineyards' ? 'active' : '' %>">
+                <i class="fa-solid fa-wine-glass category-icon"></i>
+                <span class="category-label">Vineyards</span>
+            </a>
+            <a href="/listings?category=omg" class="category-item <%= category === 'omg' ? 'active' : '' %>">
+                <i class="fa-solid fa-bolt category-icon"></i>
+                <span class="category-label">OMG!</span>
+            </a>
+            <a href="/listings?category=tiny-homes" class="category-item <%= category === 'tiny-homes' ? 'active' : '' %>">
+                <i class="fa-solid fa-house category-icon"></i>
+                <span class="category-label">Tiny homes</span>
+            </a>
+            <a href="/listings?category=towers" class="category-item <%= category === 'towers' ? 'active' : '' %>">
+                <i class="fa-solid fa-tower-observation category-icon"></i>
+                <span class="category-label">Towers</span>
+            </a>
+            <a href="/listings?category=windmills" class="category-item <%= category === 'windmills' ? 'active' : '' %>">
+                <i class="fa-solid fa-wind category-icon"></i>
+                <span class="category-label">Windmills</span>
+            </a>
+            <a href="/listings?category=luxe" class="category-item <%= category === 'luxe' ? 'active' : '' %>">
+                <i class="fa-solid fa-crown category-icon"></i>
+                <span class="category-label">Luxe</span>            </a>
+            </div>
+            <div class="tax-switch-container">
+                <div class="form-check form-switch">
+                    <div><input class="form-check-input" type="checkbox" id="taxSwitch"></div>
+                    <div><label class="form-check-label" for="taxSwitch">Show price with GST (18%)</label></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row listings-grid">
+        <% for (let listing of allListings){ %>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4">
+                <a class="listing-links" href="/listings/<%= listing._id %>">
+                    <div class="card listing-card">
+                        <img src="<%= listing.image.url%>" class="card-img-top" alt="<%= listing.title %>">                        <div class="card-img-overlay">
+                            <h5 class="card-title"><%= listing.title %></h5>
+                            <p class="card-text"><%= listing.location %>, <%= listing.country %></p>
+                            <p class="card-text">
+                                <small class="original-price">₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> per night</small>
+                                <small class="tax-price" style="display: none">₹ <%= listing.price ? Math.round(listing.price * 1.18).toLocaleString("en-IN") : "N/A" %> per night <span class="tax-included">(incl. GST)</span></small>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-text"><%= listing.title %></h6>
+                            <p class="price-text">
+                                <span class="original-price">₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> per night</span>
+                                <span class="tax-price" style="display: none">₹ <%= listing.price ? Math.round(listing.price * 1.18).toLocaleString("en-IN") : "N/A" %> per night <span class="tax-included">(incl. GST)</span></span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% } %> 
+    </div>
+<div class="inspiration-section container">
+    <h2 class="inspiration-title">Inspiration for future getaways</h2>
+    <div class="inspiration-tabs">
+        <a href="#" class="inspiration-tab active">Unique stays</a>
+        <a href="#" class="inspiration-tab">Categories</a>
+    </div>
+
+    <div class="inspiration-grid">
+        <div class="inspiration-item">
+            <div class="inspiration-location">Yurt Rentals</div>
+            <div class="inspiration-country">United States</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Farm Houses</div>
+            <div class="inspiration-country">United Kingdom</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Castle Rentals</div>
+            <div class="inspiration-country">France</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Houseboats</div>
+            <div class="inspiration-country">Netherlands</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Luxury Cabins</div>
+            <div class="inspiration-country">Canada</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Treehouse Stays</div>
+            <div class="inspiration-country">Costa Rica</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Beach Houses</div>
+            <div class="inspiration-country">Australia</div>
+        </div>
+        <div class="inspiration-item">
+            <div class="inspiration-location">Mountain Chalets</div>
+            <div class="inspiration-country">Switzerland</div>
+        </div>
+    </div>
+</div>
+    
+</body>
