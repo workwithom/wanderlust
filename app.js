@@ -1,4 +1,3 @@
-
 if (process.env.NODE_ENV !== "production") {
   // If not in production, load environment variables from .env file
   require("dotenv").config();
@@ -18,6 +17,9 @@ const reviewRoutes = require("./routes/review");
 const userRoutes = require("./routes/user");
 const session= require("express-session");
 const MongoStore = require("connect-mongo");
+const compression = require('compression');
+const setCacheHeaders = require('./middleware/cache');
+const { cacheMiddleware } = require('./utils/cache');
 
 const flash = require("connect-flash");
 const User  = require("./models/user"); // Import User model
@@ -27,7 +29,16 @@ const LocalStrategy = require("passport-local") // Import LocalStrategy
 
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl=process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
+
+// Optimize MongoDB connection options
+const mongooseOptions = {
+  maxPoolSize: 10,
+  minPoolSize: 2,
+  socketTimeoutMS: 45000,
+  serverSelectionTimeoutMS: 5000,
+  family: 4 // Use IPv4, skip trying IPv6
+};
 
 const store = MongoStore.create({
   mongoUrl: dbUrl, // MongoDB connection URL 
@@ -37,7 +48,7 @@ const store = MongoStore.create({
   touchAfter: 24 * 60 * 60, // Time in seconds to wait before updating session data
 });
 store.on("error", function (e) {
-  console.log("Session store error", e); // Log any errors with the session store
+  console.error("Session store error:", e.message);
 });
 
 const sessionOptions = { 
@@ -57,11 +68,15 @@ const sessionOptions = {
  
 
 main()
-  .then(() => console.log("Connected to DB"))
+  .then(() => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Connected to DB");
+    }
+  })
   .catch((err) => console.error("Error connecting to DB:", err));
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect(dbUrl, mongooseOptions);
 }
 
 // View engine setup
@@ -71,11 +86,23 @@ app.set("views", path.join(__dirname, "views"));
 
 
 // Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(compression());
+app.use(setCacheHeaders);
+
+// Serve static files with caching
+app.use(express.static(path.join(__dirname, "/public"), {
+  maxAge: '1w', // Cache for 1 week
+  etag: true
+}));
+
+// Middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' ? process.env.ALLOWED_ORIGIN : '*',
+  credentials: true
+}));
 app.use(cookieParser("secretcode")); // Use cookie-parser middleware
 
 // Routes
@@ -120,6 +147,9 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(8080, () => {
-  console.log("Server is listening on port 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Server is listening on port ${PORT}`);
+  }
 });

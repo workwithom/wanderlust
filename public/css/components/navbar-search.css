@@ -95,14 +95,13 @@
     display: none;
     background: #ff385c;
     border: none;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     color: white;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    margin-right: 1rem;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -124,11 +123,14 @@
     left: 0;
     right: 0;
     background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     padding: 1rem;
     transform: translateY(-100%);
     transition: transform 0.3s ease;
-    z-index: 1040;
+    z-index: 2000;
+    height: auto;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .mobile-search-overlay.active {
@@ -138,13 +140,32 @@
 
 .mobile-search-overlay .search-input-group {
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
+    padding: 8px 0;
 }
 
 .mobile-search-overlay .search-input-section {
     width: 100%;
-    border: 1px solid #ddd;
-    padding: 10px 16px;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.mobile-search-overlay .search-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 4px;
+}
+
+.mobile-search-overlay .search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #222222;
 }
 
 .mobile-search-overlay .search-divider {
@@ -154,8 +175,45 @@
 .mobile-search-overlay .search-button {
     width: 100%;
     height: 48px;
-    border-radius: 24px;
-    margin-top: 10px;
+    border-radius: 12px;
+    margin-top: 16px;
+    background: #ff385c;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Mobile Search Improvements */
+@media (max-width: 995px) {
+    .mobile-search-overlay {
+        display: block;
+        padding: 1rem;
+        background: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }    .mobile-search-overlay .search-input-group {
+        max-width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-search-overlay .search-button {
+        margin-top: 10px;
+        position: static;
+        width: 100%;
+    }
+
+    .mobile-search-overlay.active {
+        transform: translateY(0);
+    }
+
+    .mobile-search-overlay .search-input-section {
+        margin-bottom: 0.5rem;
+    }
 }
 
 /* Responsive Design */
@@ -165,7 +223,35 @@
     }
 
     .search-toggle-btn {
-        display: flex;
+        display: flex !important;
+        position: relative;
+        z-index: 1000;
+        margin-left: auto;
+        margin-right: 1rem;
+        background: #ff385c;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-searchbar {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .search-input-group {
+        flex-wrap: wrap;
+    }
+
+    .search-input-section {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .search-divider {
+        display: none;
     }
 }
 

@@ -7,10 +7,11 @@ const listingController = require("../controllers/listings");
 const multer = require("multer");
 const { storage } = require("../cloudinary/index")
 const upload = multer({ storage });
+const { cacheMiddleware } = require('../utils/cache');
 
 
 router.route("/")
-.get(wrapAsync(listingController.index))
+.get(cacheMiddleware(300), wrapAsync(listingController.index))
 .post(
     isLoggedIn,
     upload.single('image'),
@@ -25,7 +26,7 @@ router.get("/new",
 
 
 router.route("/:id")
-.get( wrapAsync(listingController.showListing))
+.get(cacheMiddleware(300), wrapAsync(listingController.showListing))
 .put(isLoggedIn,isOwner, upload.single('image'),validateListing, wrapAsync(listingController.updateListing))
 .delete(isLoggedIn,isOwner, wrapAsync(listingController.deleteListing));
 

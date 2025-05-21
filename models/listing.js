@@ -62,10 +62,8 @@ const listingSchema = new mongoose.Schema({
         default:Date.now
     },
 })
- listingSchema.post("findOneAndDelete", async function (listing) {
-     if (listing.reviews.length) {
-         const res = await Review.deleteMany({ _id: { $in: listing.reviews } });
-         console.log(res);
+ listingSchema.post("findOneAndDelete", async function (listing) {     if (listing.reviews.length) {
+         await Review.deleteMany({ _id: { $in: listing.reviews } });
      }
  });
 const Listing = mongoose.model("listing",listingSchema);

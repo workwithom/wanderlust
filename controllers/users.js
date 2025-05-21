@@ -11,9 +11,7 @@ module.exports.renderLoginForm =(req, res) => {
 module.exports.signup =  async (req, res) => {
     try {
         let { username, email, password } = req.body; // Destructure the request body
-        const newUser = new User({ username, email }); // Create a new user object
-        const registeredUser = await User.register(newUser, password); // Register the user with the provided password
-        console.log(registeredUser); // Log the registered user
+        const newUser = new User({ username, email }); // Create a new user object        const registeredUser = await User.register(newUser, password); // Register the user with the provided password
         req.login(registeredUser, (err) => { // Log in the user
             if (err) {
                 console.error(err); // Log any error that occurs during login
