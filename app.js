@@ -37,7 +37,12 @@ const mongooseOptions = {
   minPoolSize: 2,
   socketTimeoutMS: 45000,
   serverSelectionTimeoutMS: 5000,
-  family: 4 // Use IPv4, skip trying IPv6
+  ssl: true,
+  tls: true,
+  tlsAllowInvalidCertificates: false,
+  tlsAllowInvalidHostnames: false,
+  retryWrites: true,
+  w: "majority"
 };
 
 const store = MongoStore.create({
@@ -76,7 +81,29 @@ main()
   .catch((err) => console.error("Error connecting to DB:", err));
 
 async function main() {
-  await mongoose.connect(dbUrl, mongooseOptions);
+  try {
+    // Verify the connection URL has the right format
+    if (!dbUrl.includes('mongodb+srv://')) {
+      throw new Error('Invalid MongoDB connection string. Must be a MongoDB Atlas URL.');
+    }
+
+    await mongoose.connect(dbUrl, mongooseOptions);
+    console.log('MongoDB connection attempted...');
+    
+    // Test the connection
+    await mongoose.connection.db.admin().ping();
+    return true;
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    if (err.message.includes('IP whitelist')) {
+      console.error('\nPlease add your IP address to MongoDB Atlas whitelist:');
+      console.error('1. Go to MongoDB Atlas Dashboard');
+      console.error('2. Click Network Access');
+      console.error('3. Click "+ ADD IP ADDRESS"');
+      console.error('4. Add your current IP or use "Allow Access from Anywhere"');
+    }
+    return false;
+  }
 }
 
 // View engine setup
