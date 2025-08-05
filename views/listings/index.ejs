@@ -128,7 +128,7 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-4">
                 <a class="listing-links" href="/listings/<%= listing._id %>">
                     <div class="card listing-card">
-                        <img src="<%= listing.image.url%>" class="card-img-top" alt="<%= listing.title %>">                        <div class="card-img-overlay">
+                        <img src="<%= listing.image.url.replace('/upload/', '/upload/w_400,h_300,c_fill,q_70,f_auto/') %>" class="card-img-top" loading="lazy" alt="<%= listing.title %>">                        <div class="card-img-overlay">
                             <h5 class="card-title"><%= listing.title %></h5>
                             <p class="card-text"><%= listing.location %>, <%= listing.country %></p>
                             <p class="card-text">

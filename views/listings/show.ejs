@@ -30,7 +30,7 @@
 
             <!-- Main Image -->
             <div class="listing-image-container">
-                <img src="<%= listing.image.url%>" class="listing-main-image" alt="<%= listing.title %>">
+                <img src="<%= listing.image.url.replace('/upload/', '/upload/q_70,f_auto/') %>" class="listing-main-image" alt="<%= listing.title %>">
             </div>
 
             <!-- Host Info and Description Section -->
