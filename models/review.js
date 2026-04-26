@@ -10,7 +10,7 @@ const reviewSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now // ✅ correct usage
+        default: Date.now // correct usage
     },
     author: {
         type: Schema.Types.ObjectId,

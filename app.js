@@ -28,7 +28,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local") // Import LocalStrategy
 
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
 const dbUrl = process.env.ATLASDB_URL;
 
 // Optimize MongoDB connection options
